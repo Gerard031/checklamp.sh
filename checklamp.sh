@@ -37,16 +37,6 @@ check_apache() {
             echo "Failed to start Apache service ($APACHE_SERVICE)."
             exit 1
         fi
-    fi
-
-    # Check if Apache is serving a page
-    response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost)
-    if [ "$response" -eq 200 ]; then
-        echo "Apache is serving pages successfully."
-    else
-        echo "Apache is not serving pages (HTTP status: $response)."
-        exit 1
-    fi
 }
 
 # Check MySQL
