@@ -15,7 +15,7 @@ check_service() {
 check_apache() {
     echo "Checking Apache..."
 
-    # Try detecting correct Apache service name
+    # Try detecting the correct Apache service name
     if systemctl list-units --type=service | grep -q apache2; then
         APACHE_SERVICE="apache2"
     elif systemctl list-units --type=service | grep -q httpd; then
