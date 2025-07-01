@@ -49,8 +49,6 @@ check_apache() {
     fi
 }
 
-}
-
 # Check MySQL
 check_mysql() {
     echo "Checking MySQL..."
