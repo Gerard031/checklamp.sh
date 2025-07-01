@@ -38,6 +38,8 @@ check_apache() {
             exit 1
         fi
     fi
+}
+
 # Check MySQL
 check_mysql() {
     echo "Checking MySQL..."
@@ -73,7 +75,7 @@ check_php() {
         echo "PHP is not installed."
         exit 1
     fi
-fi
+}
 
 # Main function to run all checks
 main() {
