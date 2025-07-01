@@ -14,16 +14,41 @@ check_service() {
 # Check Apache
 check_apache() {
     echo "Checking Apache..."
-    check_service "apache2"
-    
-    # Check if Apache serves a page
+
+    # Try detecting correct Apache service name
+    if systemctl list-units --type=service | grep -q apache2; then
+        APACHE_SERVICE="apache2"
+    elif systemctl list-units --type=service | grep -q httpd; then
+        APACHE_SERVICE="httpd"
+    else
+        echo "Apache service not found. Is it installed?"
+        exit 1
+    fi
+
+    # Check if the Apache service is active
+    if systemctl is-active --quiet "$APACHE_SERVICE"; then
+        echo "Apache service ($APACHE_SERVICE) is running."
+    else
+        echo "Apache service ($APACHE_SERVICE) is not running. Attempting to start..."
+        sudo systemctl start "$APACHE_SERVICE"
+        if systemctl is-active --quiet "$APACHE_SERVICE"; then
+            echo "Apache started successfully."
+        else
+            echo "Failed to start Apache service ($APACHE_SERVICE)."
+            exit 1
+        fi
+    fi
+
+    # Check if Apache is serving a page
     response=$(curl -s -o /dev/null -w "%{http_code}" http://localhost)
     if [ "$response" -eq 200 ]; then
         echo "Apache is serving pages successfully."
     else
-        echo "Apache is not serving pages."
+        echo "Apache is not serving pages (HTTP status: $response)."
         exit 1
     fi
+}
+
 }
 
 # Check MySQL
