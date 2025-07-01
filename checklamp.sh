@@ -37,9 +37,7 @@ check_apache() {
             echo "Failed to start Apache service ($APACHE_SERVICE)."
             exit 1
         fi
-}
-
-}
+    fi
 # Check MySQL
 check_mysql() {
     echo "Checking MySQL..."
