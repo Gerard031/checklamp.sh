@@ -75,7 +75,7 @@ check_php() {
         echo "PHP is not installed."
         exit 1
     fi
-}
+fi
 
 # Main function to run all checks
 main() {
